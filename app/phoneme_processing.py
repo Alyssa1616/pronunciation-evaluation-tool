@@ -21,7 +21,6 @@ from app import app
 phoneme_dict = {
     'ɑː', 'ɔː', 'aʊ', 'ɑʊ','ɑi', 'tʃ', 'eɪ','ɛː', 'ɜː','ɛi', 'iː','dʒ', 'oʊ', 'oː', 'ɔi', 'ɔː', 'uː'
 }
-hf_token = "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"
 
 def load_audio(url):
     response = requests.get(url, stream=True)
