@@ -119,7 +119,6 @@ def recognize_speech():
         'status': 'success',
         'message': 'Data received',
         'transcription': phonGroups,
-        "s": "s"
     }
     
     return jsonify(response)
