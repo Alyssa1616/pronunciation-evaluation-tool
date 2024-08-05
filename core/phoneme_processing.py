@@ -17,22 +17,13 @@ import soundfile as sf
 from transformers import DonutProcessor, VisionEncoderDecoderModel
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from transformers import LayoutLMv2Processor, LayoutLMv2ForTokenClassification
-from app import app
+from .audio_utils import load_audio
+from server import app
 from dotenv import load_dotenv
 
 phoneme_dict = {
     'ɑː', 'ɔː', 'aʊ', 'ɑʊ','ɑi', 'tʃ', 'eɪ','ɛː', 'ɜː','ɛi', 'iː','dʒ', 'oʊ', 'oː', 'ɔi', 'ɔː', 'uː'
 }
-
-def load_audio(url):
-    response = requests.get(url, stream=True)
-    audio_segment = AudioSegment.from_file(io.BytesIO(response.content), format='webm')
-
-    wav_data = 'output.wav'
-    audio_segment.export(wav_data, format='wav')
-    
-    speech, _ = librosa.load(wav_data, sr=16000)
-    return speech
 
 def identify_diph(transcription):
     i = 0
@@ -73,8 +64,7 @@ def parse_words(result):
 
     return re.sub(r' s ', 's ', phonGroups)
 
-@app.route('/recognize/', methods=['POST'])
-def recognize_speech():
+def recognize_speech_logic(url):
 
     # Load the phoneme model configuration
     load_dotenv()
@@ -83,9 +73,6 @@ def recognize_speech():
     phoneme_model = Wav2Vec2ForCTC.from_pretrained(phoneme_model_name, token=hf_token)
     phoneme_tokenizer = Wav2Vec2Tokenizer.from_pretrained(phoneme_model_name, token=hf_token)
 
-    # Load the audio file
-    data = request.get_json()
-    url = data['file']
     speech = load_audio(url)
 
     if speech.ndim > 1:
