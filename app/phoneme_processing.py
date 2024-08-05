@@ -11,12 +11,14 @@ from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 import io
 import requests
 import numpy as np
+import os
 from pydub import AudioSegment
 import soundfile as sf
 from transformers import DonutProcessor, VisionEncoderDecoderModel
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from transformers import LayoutLMv2Processor, LayoutLMv2ForTokenClassification
 from app import app
+from dotenv import load_dotenv
 
 phoneme_dict = {
     'ɑː', 'ɔː', 'aʊ', 'ɑʊ','ɑi', 'tʃ', 'eɪ','ɛː', 'ɜː','ɛi', 'iː','dʒ', 'oʊ', 'oː', 'ɔi', 'ɔː', 'uː'
@@ -75,6 +77,8 @@ def parse_words(result):
 def recognize_speech():
 
     # Load the phoneme model configuration
+    load_dotenv()
+    hf_token = os.getenv('MY_SECRET_TOKEN')
     phoneme_model_name = "facebook/wav2vec2-lv-60-espeak-cv-ft"
     phoneme_model = Wav2Vec2ForCTC.from_pretrained(phoneme_model_name, token=hf_token)
     phoneme_tokenizer = Wav2Vec2Tokenizer.from_pretrained(phoneme_model_name, token=hf_token)
