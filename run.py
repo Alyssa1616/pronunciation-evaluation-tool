@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/recognize/', methods=['POST'])
+@app.route('/', methods=['POST'])
 def recognize_speech():
     data = request.get_json()
     url = data['file']
