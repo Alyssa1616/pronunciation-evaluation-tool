@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from core.phoneme_processing import recognize_speech_logic
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -14,4 +15,5 @@ def recognize_speech():
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=105)
+    port = int(os.environ.get('PORT', 105))
+    app.run(host='0.0.0.0', port=port)
