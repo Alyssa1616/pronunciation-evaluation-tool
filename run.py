@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from server.core.phoneme_controller import recognize_speech
+from core.phoneme_controller import recognize_speech
 
 app = Flask(__name__)
 CORS(app)

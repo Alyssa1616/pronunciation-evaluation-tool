@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from .phoneme_processing import recognize_speech_logic
-from server import app
+from run import app
 
 @app.route('/labels/', methods=['POST'])
 def recognize_speech():
