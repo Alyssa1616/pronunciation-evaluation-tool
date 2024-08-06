@@ -18,7 +18,7 @@ from transformers import DonutProcessor, VisionEncoderDecoderModel
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from transformers import LayoutLMv2Processor, LayoutLMv2ForTokenClassification
 from .audio_utils import load_audio
-from server import app
+from run import app
 from dotenv import load_dotenv
 
 phoneme_dict = {

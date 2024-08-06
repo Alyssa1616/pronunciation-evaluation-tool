@@ -3,7 +3,6 @@ import librosa
 from io import BytesIO
 from pydub import AudioSegment
 import io
-from server import app
 
 def load_audio(url):
     response = requests.get(url, stream=True)
