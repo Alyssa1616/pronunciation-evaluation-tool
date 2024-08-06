@@ -1,12 +1,17 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-from core.phoneme_controller import recognize_speech
+from core.phoneme_processing import recognize_speech_logic
 
 app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-app.add_url_rule('/recognize/', view_func=recognize_speech, methods=['POST'])
+@app.route('/recognize/', methods=['POST'])
+def recognize_speech():
+    data = request.get_json()
+    url = data['file']
+    response = recognize_speech_logic(url)
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=105)

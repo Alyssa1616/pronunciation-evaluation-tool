@@ -1,15 +1,12 @@
 from flask import Flask
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-import librosa
 import torch
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
 import re
 from io import BytesIO
 from transformers import AutoModel, AutoTokenizer 
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
-import io
-import requests
 import numpy as np
 import os
 from pydub import AudioSegment
@@ -17,52 +14,9 @@ import soundfile as sf
 from transformers import DonutProcessor, VisionEncoderDecoderModel
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from transformers import LayoutLMv2Processor, LayoutLMv2ForTokenClassification
-from .audio_utils import load_audio
+from .audio_utils import load_audio, parse_words, identify_diph
 from run import app
 from dotenv import load_dotenv
-
-phoneme_dict = {
-    'ɑː', 'ɔː', 'aʊ', 'ɑʊ','ɑi', 'tʃ', 'eɪ','ɛː', 'ɜː','ɛi', 'iː','dʒ', 'oʊ', 'oː', 'ɔi', 'ɔː', 'uː'
-}
-
-def identify_diph(transcription):
-    i = 0
-    result = ""
-    tempString = transcription
-    tempString = tempString.replace(" ", "")
-    print(tempString)
-    while i < len(tempString):
-        print(tempString[i:i+2])
-        if tempString[i:i+2] in phoneme_dict:
-            result += tempString[i:i+2] + " "
-            i += 2
-        else:
-            result += tempString[i:i+1] + " "
-            i += 1
-
-    return result
-
-def parse_words(result):
-    numGroups = 0
-    totalPads = 0
-    for el in result:
-        if el != '<pad>':
-            numGroups += 1
-        else: totalPads += 1
-    avg = int(totalPads / numGroups)
-    phonGroups = ""
-    currPad = 0
-    for el in result:
-        if currPad == avg+5:
-            phonGroups += " "
-        if el != '<pad>':
-            phonGroups += el
-            currPad = 0
-        else:
-            currPad += 1
-
-
-    return re.sub(r' s ', 's ', phonGroups)
 
 def recognize_speech_logic(url):
 
@@ -112,6 +66,3 @@ def recognize_speech_logic(url):
     }
     
     return jsonify(response)
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=105)
