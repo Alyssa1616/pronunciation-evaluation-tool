@@ -7,6 +7,10 @@ app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+@app.route('/', methods=['GET', 'HEAD'])
+def home():
+    return jsonify({"message": "API is up and running!"})
+
 @app.route('/recognize', methods=['POST', 'HEAD'])
 def recognize_speech():
     data = request.get_json()
