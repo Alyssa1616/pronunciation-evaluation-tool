@@ -6,7 +6,7 @@ import os
 import io
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": ["http://localhost:1050/home"]}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/', methods=['GET', 'HEAD'])
@@ -15,19 +15,19 @@ def home():
 
 @app.route('/recognize', methods=['POST', 'HEAD'])
 def recognize_speech():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'}), 400
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
+    # if 'file' not in request.files:
+    #     return jsonify({'error': 'No file part'}), 400
+    # file = request.files['file']
+    # if file.filename == '':
+    #     return jsonify({'error': 'No selected file'}), 400
 
-    # Read file into BytesIO stream
-    file_stream = io.BytesIO()
-    file.save(file_stream)
-    file_stream.seek(0)
-    # data = request.get_json()
-    # url = data['file']
-    response = recognize_speech_logic(file_stream)
+    # # Read file into BytesIO stream
+    # file_stream = io.BytesIO()
+    # file.save(file_stream)
+    # file_stream.seek(0)
+    data = request.get_json()
+    url = data['file']
+    response = recognize_speech_logic(url)
     return jsonify(response)
 
 # if __name__ == '__main__':
