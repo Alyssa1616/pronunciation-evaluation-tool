@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from core.phoneme_processing import recognize_speech_logic
+from werkzeug.utils import secure_filename
 import os
+import io
 
 app = Flask(__name__)
 CORS(app)
@@ -13,9 +15,19 @@ def home():
 
 @app.route('/recognize', methods=['POST', 'HEAD'])
 def recognize_speech():
-    data = request.get_json()
-    url = data['file']
-    response = recognize_speech_logic(url)
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    # Read file into BytesIO stream
+    file_stream = io.BytesIO()
+    file.save(file_stream)
+    file_stream.seek(0)
+    # data = request.get_json()
+    # url = data['file']
+    response = recognize_speech_logic(file_stream)
     return jsonify(response)
 
 # if __name__ == '__main__':

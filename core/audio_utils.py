@@ -9,15 +9,18 @@ phoneme_dict = {
     'ɑː', 'ɔː', 'aʊ', 'ɑʊ','ɑi', 'tʃ', 'eɪ','ɛː', 'ɜː','ɛi', 'iː','dʒ', 'oʊ', 'oː', 'ɔi', 'ɔː', 'uː'
 }
 
-def load_audio(url):
-    response = requests.get(url, stream=True)
-    audio_segment = AudioSegment.from_file(io.BytesIO(response.content), format='webm')
-
-    wav_data = 'output.wav'
-    audio_segment.export(wav_data, format='wav')
-    
-    speech, _ = librosa.load(wav_data, sr=16000)
+def load_audio(file_path):
+    # buffer = io.BytesIO(file_stream.read())
+    speech, _ = librosa.load(file_path, sr=16000)  # you can adjust the sample rate as needed
     return speech
+    # response = requests.get(url, stream=True)
+    # audio_segment = AudioSegment.from_file(io.BytesIO(response.content), format='webm')
+
+    # wav_data = 'output.wav'
+    # audio_segment.export(wav_data, format='wav')
+    
+    # speech, _ = librosa.load(wav_data, sr=16000)
+    # return speech
 
 def parse_words(result):
     numGroups = 0
