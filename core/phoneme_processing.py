@@ -14,7 +14,7 @@ import soundfile as sf
 from transformers import DonutProcessor, VisionEncoderDecoderModel
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from transformers import LayoutLMv2Processor, LayoutLMv2ForTokenClassification
-from .audio_utils import load_audio, parse_words
+from core.audio_utils import load_audio, parse_words
 from dotenv import load_dotenv
 
 def recognize_speech_logic(url):
