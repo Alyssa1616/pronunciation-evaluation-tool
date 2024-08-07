@@ -6,7 +6,7 @@ import os
 import io
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["http://localhost:1050/home"]}})
+CORS(app, resources={r"/*": {"origins": ["http://localhost:1050/home", "http://localhost:1050"]}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/', methods=['GET', 'HEAD'])
