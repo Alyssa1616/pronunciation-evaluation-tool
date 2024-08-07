@@ -3,6 +3,7 @@ from flask_cors import CORS
 from core.phoneme_processing import recognize_speech_logic
 from werkzeug.utils import secure_filename
 import os
+import base64
 import io
 
 app = Flask(__name__)
@@ -26,8 +27,19 @@ def recognize_speech():
     # file.save(file_stream)
     # file_stream.seek(0)
     data = request.get_json()
-    url = data['file']
-    response = recognize_speech_logic(url)
+    # url = data['file']
+
+
+    audio_base64 = data['file']
+        
+    if audio_base64.startswith('data:'):
+        audio_base64 = audio_base64.split(',')[1]
+    
+    audio_data = base64.b64decode(audio_base64)
+        
+    audio_io = io.BytesIO(audio_data)
+    
+    response = recognize_speech_logic(audio_io)
     return jsonify(response)
 
 # if __name__ == '__main__':
