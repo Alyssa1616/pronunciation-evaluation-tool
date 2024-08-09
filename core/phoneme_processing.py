@@ -29,12 +29,12 @@ def load_audio(url):
     # wav_data = 'output.wav'
     # audio_segment.export(wav_data, format='wav')
 
-    audio_segment = AudioSegment.from_file(url)
-    wav_io = io.BytesIO()
-    audio_segment.export(wav_io, format="wav")
-    wav_io.seek(0)  # Reset stream position
+    # audio_segment = AudioSegment.from_file(url)
+    # wav_io = io.BytesIO()
+    # audio_segment.export(wav_io, format="wav")
+    # wav_io.seek(0)  # Reset stream position
 
-    speech, _ = librosa.load(wav_io, sr=16000)
+    speech, _ = librosa.load("new_test1.wav", sr=16000)
     return speech
 
 def parse_words(result):
