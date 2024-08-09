@@ -40,7 +40,7 @@ future==1.0.0
 fvcore==0.1.5.post20221221
 g2p-en==2.1.0
 g2pK==0.9.4
-gcloud==0.18.3
+gcloud==0.17.0
 googleapis-common-protos==1.63.2
 grpcio==1.64.1
 httplib2==0.22.0
