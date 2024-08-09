@@ -90,7 +90,7 @@ ninja==1.11.1.1
 nltk==3.8.1
 numba==0.60.0
 numpy==1.26.4
-oauth2client==4.1.2
+oauth2client==3.0.0
 omegaconf==2.3.0
 opencv-python==4.10.0.84
 opencv-python-headless==4.10.0.84
