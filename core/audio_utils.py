@@ -1,8 +1,6 @@
-import requests
 import librosa
 from io import BytesIO
 from pydub import AudioSegment
-import io
 import re
 
 phoneme_dict = {
