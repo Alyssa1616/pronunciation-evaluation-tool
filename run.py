@@ -5,10 +5,16 @@ from werkzeug.utils import secure_filename
 import os
 import base64
 import io
+from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["*", "http://localhost:3000"]}})
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+hf_token = "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"
+phoneme_model_name = "facebook/wav2vec2-lv-60-espeak-cv-ft"
+phoneme_model = Wav2Vec2ForCTC.from_pretrained(phoneme_model_name, token=hf_token)
+phoneme_tokenizer = Wav2Vec2Tokenizer.from_pretrained(phoneme_model_name, token=hf_token)
 
 @app.route('/', methods=['GET', 'HEAD'])
 def home():
@@ -40,7 +46,7 @@ def recognize_speech():
         
     audio_io = io.BytesIO(audio_data)
     
-    response = recognize_speech_logic(audio_io)
+    response = recognize_speech_logic(audio_io, phoneme_tokenizer, phoneme_model)
     return jsonify(response)
 
 # if __name__ == '__main__':

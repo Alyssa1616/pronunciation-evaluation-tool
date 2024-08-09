@@ -34,7 +34,7 @@ def load_audio(url):
     audio_segment.export(wav_io, format="wav")
     wav_io.seek(0)  # Reset stream position
 
-    speech, _ = librosa.load("new_test1.wav", sr=16000)
+    speech, _ = librosa.load(wav_io, sr=16000)
     return speech
 
 def parse_words(result):
@@ -59,15 +59,15 @@ def parse_words(result):
 
     return re.sub(r' s ', 's ', phonGroups)
 
-def recognize_speech_logic(url):
+def recognize_speech_logic(url, phoneme_tokenizer, phoneme_model):
 
     # Load the phoneme model configuration
     # load_dotenv()
     # hf_token = os.getenv('HF_TOKEN')
-    hf_token = "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"
-    phoneme_model_name = "facebook/wav2vec2-lv-60-espeak-cv-ft"
-    phoneme_model = Wav2Vec2ForCTC.from_pretrained(phoneme_model_name, token=hf_token)
-    phoneme_tokenizer = Wav2Vec2Tokenizer.from_pretrained(phoneme_model_name, token=hf_token)
+    # hf_token = "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"
+    # phoneme_model_name = "facebook/wav2vec2-lv-60-espeak-cv-ft"
+    # phoneme_model = Wav2Vec2ForCTC.from_pretrained(phoneme_model_name, token=hf_token)
+    # phoneme_tokenizer = Wav2Vec2Tokenizer.from_pretrained(phoneme_model_name, token=hf_token)
 
     speech = load_audio(url)
 
@@ -107,4 +107,4 @@ def recognize_speech_logic(url):
         'transcription': phonGroups,
     }
     
-    return jsonify(response)
+    return response
