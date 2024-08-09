@@ -34,7 +34,7 @@ def load_audio(url):
     audio_segment.export(wav_io, format="wav")
     wav_io.seek(0)  # Reset stream position
 
-    speech, _ = librosa.load(wav_io, sr=16000)
+    speech, _ = librosa.load("new_test1.wav", sr=16000)
     return speech
 
 def parse_words(result):
