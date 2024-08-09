@@ -16,7 +16,7 @@ def load_audio(url):
 
     # wav_data = 'output.wav'
     # audio_segment.export(wav_data, format='wav')
-    
+
     speech, _ = librosa.load(url, sr=16000)
     return speech
 
