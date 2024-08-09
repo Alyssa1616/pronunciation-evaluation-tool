@@ -20,8 +20,9 @@ from dotenv import load_dotenv
 def recognize_speech_logic(url):
 
     # Load the phoneme model configuration
-    load_dotenv()
-    hf_token = os.getenv('HF_TOKEN')
+    # load_dotenv()
+    # hf_token = os.getenv('HF_TOKEN')
+    hf_token = "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"
     phoneme_model_name = "facebook/wav2vec2-lv-60-espeak-cv-ft"
     phoneme_model = Wav2Vec2ForCTC.from_pretrained(phoneme_model_name, token=hf_token)
     phoneme_tokenizer = Wav2Vec2Tokenizer.from_pretrained(phoneme_model_name, token=hf_token)
