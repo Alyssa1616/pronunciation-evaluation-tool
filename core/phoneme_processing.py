@@ -9,6 +9,7 @@ from transformers import AutoModel, AutoTokenizer
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 import numpy as np
 import os
+import io
 from pydub import AudioSegment
 import soundfile as sf
 # from transformers import DonutProcessor, VisionEncoderDecoderModel
@@ -27,6 +28,11 @@ def load_audio(url):
 
     # wav_data = 'output.wav'
     # audio_segment.export(wav_data, format='wav')
+
+    audio_segment = AudioSegment.from_file(url)
+    wav_io = io.BytesIO()
+    audio_segment.export(wav_io, format="wav")
+    wav_io.seek(0)  # Reset stream position
 
     speech, _ = librosa.load(url, sr=16000)
     return speech
