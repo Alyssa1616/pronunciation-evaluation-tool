@@ -34,7 +34,7 @@ def load_audio(url):
     # audio_segment.export(wav_io, format="wav")
     # wav_io.seek(0)  # Reset stream position
 
-    speech, _ = librosa.load("new_test1.wav", sr=16000)
+    speech, _ = sf.read("new_test1.wav")
     return speech
 
 def parse_words(result):
@@ -107,4 +107,4 @@ def recognize_speech_logic(url, phoneme_tokenizer, phoneme_model):
         'transcription': phonGroups,
     }
     
-    return response
+    return jsonify(response)
