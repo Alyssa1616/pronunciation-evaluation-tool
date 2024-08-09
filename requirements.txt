@@ -119,7 +119,7 @@ pybind11==2.13.1
 pyclipper==1.3.0.post5
 pycocotools==2.0.8
 pycparser==2.22
-pycryptodome==3.6.4
+pycryptodome==3.4.3
 pydot==3.0.1
 pydub==0.25.1
 Pygments==2.18.0
