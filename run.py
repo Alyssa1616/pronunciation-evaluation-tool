@@ -34,18 +34,18 @@ def recognize_speech():
     # file_stream.seek(0)
     # return jsonify("Recognition result")
     print("0")
-    # data = request.get_json()
-    # url = data['file']
+    data = request.get_json()
+    url = data['file']
 
-    # print("0.1")
-    # audio_base64 = data['file']
+    print("0.1")
+    audio_base64 = data['file']
         
-    # if audio_base64.startswith('data:'):
-    #     audio_base64 = audio_base64.split(',')[1]
+    if audio_base64.startswith('data:'):
+        audio_base64 = audio_base64.split(',')[1]
     
-    # audio_data = base64.b64decode(audio_base64)
+    audio_data = base64.b64decode(audio_base64)
         
-    # audio_io = io.BytesIO(audio_data)
+    audio_io = io.BytesIO(audio_data)
     
     # response = recognize_speech_logic("new_test1.wav", phoneme_tokenizer, phoneme_model)
     return "hello"
