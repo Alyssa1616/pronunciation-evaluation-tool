@@ -36,7 +36,7 @@ def load_audio(url):
 
     # speech, _ = sf.read("new_test1.wav")
     print("1.5")
-    # speech, _ = librosa.load("new_test1.wav", sr=8000, mono=True)
+    speech, _ = librosa.load(wav_io, sr=8000, mono=True)
     # print("1.8")
     return "speech"
 
