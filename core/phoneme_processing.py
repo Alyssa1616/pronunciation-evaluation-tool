@@ -34,7 +34,10 @@ def load_audio(url):
     # audio_segment.export(wav_io, format="wav")
     # wav_io.seek(0)  # Reset stream position
 
-    speech, _ = sf.read("new_test1.wav")
+    # speech, _ = sf.read("new_test1.wav")
+    print("1.5")
+    speech, _ = librosa.load("new_test1.wav", sr=8000, mono=True)
+    print("1.8")
     return speech
 
 def parse_words(result):
@@ -68,19 +71,19 @@ def recognize_speech_logic(url, phoneme_tokenizer, phoneme_model):
     # phoneme_model_name = "facebook/wav2vec2-lv-60-espeak-cv-ft"
     # phoneme_model = Wav2Vec2ForCTC.from_pretrained(phoneme_model_name, token=hf_token)
     # phoneme_tokenizer = Wav2Vec2Tokenizer.from_pretrained(phoneme_model_name, token=hf_token)
-
+    print("1")
     speech = load_audio(url)
-
+    print("2")
     if speech.ndim > 1:
         speech = speech.mean(axis=1)
-
+    print("3")
     # Tokenize the audio input
     input_values = phoneme_tokenizer(speech, return_tensors="pt").input_values
-
+    print("4")
     # Perform phoneme transcription
     with torch.no_grad():
         logits = phoneme_model(input_values).logits
-
+    print("5")
     vocab = phoneme_tokenizer.get_vocab()
     id_to_token = {id: token for token, id in vocab.items()}
 
