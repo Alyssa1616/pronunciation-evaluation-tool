@@ -38,7 +38,7 @@ def load_audio(url):
     print("1.5")
     speech, _ = librosa.load(wav_io, sr=8000, mono=True)
     # print("1.8")
-    return "speech"
+    return speech
 
 def parse_words(result):
     numGroups = 0
@@ -73,41 +73,41 @@ def recognize_speech_logic(url, phoneme_tokenizer, phoneme_model):
     # phoneme_tokenizer = Wav2Vec2Tokenizer.from_pretrained(phoneme_model_name, token=hf_token)
     print("1")
     speech = load_audio(url)
-    # print("2")
-    # if speech.ndim > 1:
-    #     speech = speech.mean(axis=1)
-    # print("3")
-    # # Tokenize the audio input
-    # input_values = phoneme_tokenizer(speech, return_tensors="pt").input_values
-    # print("4")
-    # # Perform phoneme transcription
-    # with torch.no_grad():
-    #     logits = phoneme_model(input_values).logits
-    # print("5")
-    # vocab = phoneme_tokenizer.get_vocab()
-    # id_to_token = {id: token for token, id in vocab.items()}
+    print("2")
+    if speech.ndim > 1:
+        speech = speech.mean(axis=1)
+    print("3")
+    # Tokenize the audio input
+    input_values = phoneme_tokenizer(speech, return_tensors="pt").input_values
+    print("4")
+    # Perform phoneme transcription
+    with torch.no_grad():
+        logits = phoneme_model(input_values).logits
+    print("5")
+    vocab = phoneme_tokenizer.get_vocab()
+    id_to_token = {id: token for token, id in vocab.items()}
 
-    # predicted_ids = torch.argmax(logits, dim=-1)
+    predicted_ids = torch.argmax(logits, dim=-1)
 
-    # phoneme_sequence = [id_to_token[idx.item()] for idx in predicted_ids[0] if idx.item() in id_to_token]
+    phoneme_sequence = [id_to_token[idx.item()] for idx in predicted_ids[0] if idx.item() in id_to_token]
     
-    # # group the phonemes into words by the spaces between them
-    # try:
-    #     start_idx = next(i for i, x in enumerate(phoneme_sequence) if x != '<pad>')
-    #     end_idx = len(phoneme_sequence) - next(i for i, x in enumerate(reversed(phoneme_sequence)) if x != '<pad>')
+    # group the phonemes into words by the spaces between them
+    try:
+        start_idx = next(i for i, x in enumerate(phoneme_sequence) if x != '<pad>')
+        end_idx = len(phoneme_sequence) - next(i for i, x in enumerate(reversed(phoneme_sequence)) if x != '<pad>')
 
-    #     result = phoneme_sequence[start_idx:end_idx]
-    # except:
-    #     print("Error: No words were said.")
+        result = phoneme_sequence[start_idx:end_idx]
+    except:
+        print("Error: No words were said.")
 
-    # # result = 'kamo estas hɔi'
+    # result = 'kamo estas hɔi'
 
-    # phonGroups = parse_words(result)
+    phonGroups = parse_words(result)
 
     response = {
         'status': 'success',
         'message': 'Data received',
-        'transcription': speech,
+        'transcription': phonGroups,
     }
     
     return jsonify(response)
