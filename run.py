@@ -33,20 +33,21 @@ def recognize_speech():
     # file.save(file_stream)
     # file_stream.seek(0)
     # return jsonify("Recognition result")
-    data = request.get_json()
+    print("0")
+    # data = request.get_json()
     # url = data['file']
 
-
-    audio_base64 = data['file']
+    # print("0.1")
+    # audio_base64 = data['file']
         
-    if audio_base64.startswith('data:'):
-        audio_base64 = audio_base64.split(',')[1]
+    # if audio_base64.startswith('data:'):
+    #     audio_base64 = audio_base64.split(',')[1]
     
-    audio_data = base64.b64decode(audio_base64)
+    # audio_data = base64.b64decode(audio_base64)
         
-    audio_io = io.BytesIO(audio_data)
+    # audio_io = io.BytesIO(audio_data)
     
-    response = recognize_speech_logic(audio_io, phoneme_tokenizer, phoneme_model)
+    response = recognize_speech_logic("new_test1.wav", phoneme_tokenizer, phoneme_model)
     return jsonify(response)
 
 # if __name__ == '__main__':
