@@ -47,7 +47,7 @@ def recognize_speech():
         
     # audio_io = io.BytesIO(audio_data)
     
-    response = recognize_speech_logic("new_test1.wav", phoneme_tokenizer, phoneme_model)
+    # response = recognize_speech_logic("new_test1.wav", phoneme_tokenizer, phoneme_model)
     return "hello"
 
 # if __name__ == '__main__':
