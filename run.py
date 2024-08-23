@@ -8,7 +8,7 @@ import io
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["*", "http://localhost:3001"]}})
+CORS(app, resources={r"/*": {"origins": ["http://localhost:3001"]}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 hf_token = "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"
@@ -53,3 +53,10 @@ def recognize_speech():
 # if __name__ == '__main__':
 #     port = int(os.environ.get('PORT', 105))
 #     app.run(host='0.0.0.0', port=port)
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3001')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
+    return response
