@@ -8,7 +8,7 @@ import io
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["*", "http://localhost:3000"]}})
+CORS(app, resources={r"/*": {"origins": ["*", "http://localhost:3001"]}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 hf_token = "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"
