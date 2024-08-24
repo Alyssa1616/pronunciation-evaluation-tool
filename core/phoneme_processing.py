@@ -80,10 +80,13 @@ def recognize_speech_logic(url, phoneme_tokenizer, phoneme_model):
     print("3")
     # Tokenize the audio input
     input_values = phoneme_tokenizer(speech, return_tensors="pt").input_values
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    phoneme_model.to(device)
+    input_values = input_values.to(device)
     print("4")
     # Perform phoneme transcription
-    # with torch.no_grad():
-    #     logits = phoneme_model(input_values).logits
+    with torch.no_grad():
+        logits = phoneme_model(input_values).logits
     print("5")
     vocab = phoneme_tokenizer.get_vocab()
     id_to_token = {id: token for token, id in vocab.items()}
