@@ -82,12 +82,12 @@ def recognize_speech_logic(url, phoneme_tokenizer, phoneme_model):
     input_values = phoneme_tokenizer(speech, return_tensors="pt").input_values
     print("4")
     # Perform phoneme transcription
-    with torch.no_grad():
-        logits = phoneme_model(input_values).logits
+    # with torch.no_grad():
+    #     logits = phoneme_model(input_values).logits
     print("5")
-    # vocab = phoneme_tokenizer.get_vocab()
-    # id_to_token = {id: token for token, id in vocab.items()}
-
+    vocab = phoneme_tokenizer.get_vocab()
+    id_to_token = {id: token for token, id in vocab.items()}
+    print("5")
     # predicted_ids = torch.argmax(logits, dim=-1)
 
     # phoneme_sequence = [id_to_token[idx.item()] for idx in predicted_ids[0] if idx.item() in id_to_token]
